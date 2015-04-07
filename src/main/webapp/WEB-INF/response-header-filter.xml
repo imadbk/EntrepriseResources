@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<response-header-mapper>
+    <!-- generic rule for all html requests -->
+    <mapping url=".*.eot">
+        <default>
+            <response-headers>
+             
+                <header key="Cache-Control" value="private"/>
+                <header key="Pragma" value="cache"/>
+                
+            </response-headers>
+        </default>
+    </mapping>
+</response-header-mapper>
