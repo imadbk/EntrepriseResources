@@ -27,7 +27,7 @@ body{
 background-image: url('${pageContext.request.contextPath}/resources/img/background.jpg');
 }
  .container{
- background-color: rgb(255,255,255);
+ background-color: rgba(255,255,255,0.9);
  height: 900px;
 }
 /* centered columns styles */

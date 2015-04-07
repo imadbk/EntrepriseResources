@@ -44,7 +44,7 @@
 						</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id="inputFirstname"
-								placeholder="Prénom">
+								name = "firstname" placeholder="Prénom">
 						</div>
 					</div>
 					<div class="form-group">

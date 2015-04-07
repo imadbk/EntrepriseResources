@@ -30,4 +30,9 @@ public class ProfilesService {
 		return (Profiles) query.list().get(0);
 	}
 
+	public Profiles getProfileByRoleName(String role) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.getNamedQuery("Profiles.findByProfileName").setParameter("profileName", role);
+		return (Profiles) query.list().get(0);
+	}
 }

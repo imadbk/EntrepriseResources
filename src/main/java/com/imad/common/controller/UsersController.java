@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imad.common.entity.EntrepriseUser;
+import com.imad.common.entity.Profiles;
+import com.imad.common.entity.UsersRights;
+import com.imad.common.services.ProfilesService;
 import com.imad.common.services.UsersService;
 import com.imad.common.utils.JqGridData;
 
@@ -28,6 +31,10 @@ public class UsersController {
 
 	@Resource(name = "usersService")
 	UsersService usersService;
+	
+	@Resource(name = "profileService")
+	ProfilesService profileService;
+
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -128,11 +135,30 @@ public class UsersController {
 					.contains(new SimpleGrantedAuthority("ADMIN"));
 			if (isAdmin) {
 
+				String[] roles = request.getParameterValues("roles");
+				String username = request.getParameter("username");
+				String lastname = request.getParameter("lastname");
+				String firstname = request.getParameter("firstname");
+				String email = request.getParameter("email");
+				String password = request.getParameter("password");
+				
+				EntrepriseUser user = new EntrepriseUser();
+				user.setEmail(email);
+				user.setFirstname(firstname);
+				user.setLastname(lastname);
+				user.setPassword(password);
+				user.setUsername(username);
+				List<UsersRights> usersRightsCollection = new ArrayList<UsersRights>();
+				Profiles profile;
+				for(String role : roles){
+					profile = profileService.getProfileByRoleName(role);
+				}
+				user.setUsersRightsCollection(usersRightsCollection);
 			} else {
 
 
 			}
 		}
-		return "";
+		return "users/register";
 	}
 }
