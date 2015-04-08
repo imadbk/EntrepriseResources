@@ -22,6 +22,7 @@ import com.imad.common.entity.EntrepriseUser;
 import com.imad.common.entity.Profiles;
 import com.imad.common.entity.UsersRights;
 import com.imad.common.services.ProfilesService;
+import com.imad.common.services.RightsService;
 import com.imad.common.services.UsersService;
 import com.imad.common.utils.JqGridData;
 
@@ -29,12 +30,14 @@ import com.imad.common.utils.JqGridData;
 @RequestMapping("/users")
 public class UsersController {
 
+	@Resource(name = "rightsService")
+	RightsService rightsService;
+
 	@Resource(name = "usersService")
 	UsersService usersService;
-	
+
 	@Resource(name = "profileService")
 	ProfilesService profileService;
-
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -123,40 +126,58 @@ public class UsersController {
 			RequestMethod.POST })
 	public String save(HttpServletRequest request,
 			RedirectAttributes redirectAttributes) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if (auth instanceof AnonymousAuthenticationToken) {
-
-
+			return "security/login";
 		} else {
 			boolean isAdmin = SecurityContextHolder.getContext()
 					.getAuthentication().getAuthorities()
 					.contains(new SimpleGrantedAuthority("ADMIN"));
 			if (isAdmin) {
 
-				String[] roles = request.getParameterValues("roles");
-				String username = request.getParameter("username");
-				String lastname = request.getParameter("lastname");
-				String firstname = request.getParameter("firstname");
-				String email = request.getParameter("email");
-				String password = request.getParameter("password");
-				
-				EntrepriseUser user = new EntrepriseUser();
-				user.setEmail(email);
-				user.setFirstname(firstname);
-				user.setLastname(lastname);
-				user.setPassword(password);
-				user.setUsername(username);
-				List<UsersRights> usersRightsCollection = new ArrayList<UsersRights>();
-				Profiles profile;
-				for(String role : roles){
-					profile = profileService.getProfileByRoleName(role);
+				try {
+					String[] roles = request.getParameterValues("roles");
+					String username = request.getParameter("username");
+					String lastname = request.getParameter("lastname");
+					String firstname = request.getParameter("firstname");
+					String email = request.getParameter("email");
+					String password = request.getParameter("password");
+
+					EntrepriseUser user = new EntrepriseUser();
+					user.setEmail(email);
+					user.setFirstname(firstname);
+					user.setLastname(lastname);
+					user.setPassword(password);
+					user.setUsername(username);
+					user.setLocked("false");
+					user.setEnabled("true");
+					user.setPasswordToChange("true");
+					List<UsersRights> usersRightsCollection = new ArrayList<UsersRights>();
+					usersService.save(user);
+					Profiles profile;
+					UsersRights userRight;
+					for (String role : roles) {
+						profile = profileService.getProfileByRoleName(role);
+						userRight = new UsersRights();
+						userRight.setProfileId(profile);
+						userRight.setUserId(user);
+						usersRightsCollection.add(userRight);
+						rightsService.add(userRight);
+					}
+
+					redirectAttributes.addAttribute("error", false);
+					redirectAttributes.addAttribute("message",
+							"user.add.success");
+				} catch (Exception e) {
+					e.printStackTrace();
+					redirectAttributes.addAttribute("error", true);
+					redirectAttributes.addAttribute("message", "server.error");
+					return "redirect:/info";
 				}
-				user.setUsersRightsCollection(usersRightsCollection);
 			} else {
-
-
+				return "redirect:/accueil";
 			}
 		}
 		return "users/register";

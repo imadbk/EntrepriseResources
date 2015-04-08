@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.imad.common.entity.UsersRights;
@@ -15,6 +16,7 @@ import com.imad.common.entity.UsersRights;
 
 
 @Service("rightsService")
+@Transactional
 public class RightsService {
 
 	@Resource(name = "usersService")

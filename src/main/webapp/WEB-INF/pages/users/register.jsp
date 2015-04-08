@@ -10,6 +10,11 @@
 
 	<div class="container">
 		<jsp:include page="/WEB-INF/pages/includes/menu.jsp"></jsp:include>
+		<div id="message" class="message <c:if test="${error}">error</c:if>">
+			<c:if test="${not empty message}">
+				<spring:message code="${message}" />
+			</c:if>
+		</div>
 		<div class="buttonAdmin">
 			<div class="span3 offset2">
 				<a href="${pageContext.servletContext.contextPath}/users/list"
@@ -44,7 +49,7 @@
 						</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id="inputFirstname"
-								name = "firstname" placeholder="Prénom">
+								name="firstname" placeholder="Prénom">
 						</div>
 					</div>
 					<div class="form-group">
@@ -57,7 +62,7 @@
 					<div class="form-group">
 						<label for="select" class="col-lg-2 control-label">Roles</label>
 						<div class="col-lg-10">
-							<select multiple="" class="form-control" id="select" name="roles">
+							<select multiple="multiple" class="form-control" id="select" name="roles">
 								<option value="CONFIG">Configurateur</option>
 								<option value="ADMIN">Administrateur</option>
 								<option value="USER">Utilisateur</option>

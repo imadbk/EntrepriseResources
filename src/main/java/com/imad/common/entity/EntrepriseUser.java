@@ -62,7 +62,7 @@ public class EntrepriseUser implements Serializable {
 	private String lastname;
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 45)
+	@Size(min = 1, max = 255)
 	@Column(name = "password")
 	private String password;
 	// @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
