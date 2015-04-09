@@ -23,7 +23,7 @@
 		</div>
 		<br /> <br>
 		<div class="row">
-			<form class="form-horizontal"
+			<form class="form-horizontal" id="user-form"
 				action="${pageContext.servletContext.contextPath}/users/save"
 				method="GET">
 				<fieldset>
@@ -62,7 +62,8 @@
 					<div class="form-group">
 						<label for="select" class="col-lg-2 control-label">Roles</label>
 						<div class="col-lg-10">
-							<select multiple="multiple" class="form-control" id="select" name="roles">
+							<select multiple="multiple" class="form-control" id="select"
+								name="roles">
 								<option value="CONFIG">Configurateur</option>
 								<option value="ADMIN">Administrateur</option>
 								<option value="USER">Utilisateur</option>
@@ -79,18 +80,18 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputPassword" class="col-lg-2 control-label">
+						<label for="input_c_password" class="col-lg-2 control-label">
 							Confirmation</label>
 						<div class="col-lg-10">
-							<input type="password" class="form-control" id="inputPassword"
-								placeholder="Confirmation">
+							<input type="password" class="form-control" id="c_password"
+								placeholder="Confirmation" name="c_password">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
-							<button type="reset" class="btn btn-default">Cancel</button>
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-default">Annuler</button>
+							<button type="submit" class="btn btn-primary">Envoyer</button>
 						</div>
 
 					</div>
@@ -99,5 +100,7 @@
 
 		</div>
 	</div>
-</body>
+	<script src="<c:url value="/resources/js/jquery.validate.min.js"/> "></script>
+	<script src="<c:url value="/resources/js/userForm.js"/> "></script>
+		
 </html>

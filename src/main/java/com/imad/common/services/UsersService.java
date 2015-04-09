@@ -45,7 +45,8 @@ public class UsersService {
 
 		Query query = session.getNamedQuery("EntrepriseUsers.findByUsername")
 				.setParameter("username", username);
-		return (EntrepriseUser) query.list().get(0);
+		return (query.list().size() > 0 ? (EntrepriseUser) query.list().get(0)
+				: null);
 	}
 
 	@Transactional
@@ -53,7 +54,7 @@ public class UsersService {
 		Session session = sessionFactory.getCurrentSession();
 		if (!StringUtils.isEmpty(user)) {
 			user.setPassword(Cryptage.enBCrypt(user.getPassword()));
-			session.save(user);
+			session.saveOrUpdate(user);
 		}
 	}
 

@@ -46,9 +46,15 @@ public class RightsService {
 		return query.list();
 	}
 
+	public boolean isAlreadyUserRight(UsersRights right){
+		
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("SELECT u FROM UsersRights u WHERE u.userId = " + right.getUserId().getUserId() +" and u.profileId = " + right.getProfileId().getProfileId() );
+		return query.list().size() > 0;
+	}
 	public void add(UsersRights right) {
 		Session session = sessionFactory.getCurrentSession();
-		if (!StringUtils.isEmpty(right))
+		if (!StringUtils.isEmpty(right) && !isAlreadyUserRight(right))
 			session.save(right);
 	}
 

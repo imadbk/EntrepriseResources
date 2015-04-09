@@ -24,7 +24,7 @@
 						search : false,
 						align : 'center',
 						resizable : false,
-						//                             formatter: editCheckbox,
+                        formatter: editCheckbox,
 						multiselect : true
 					}, {
 						name : 'username',
@@ -33,7 +33,7 @@
 						align : 'left',
 						edittype : 'text',
 						resizable : false,
-					//                             formatter: editLink
+		                formatter: editLink
 					}, {
 						name : 'name',
 						index : 'name',
@@ -106,15 +106,15 @@
 			search : true
 		});
 	});
-	//     function editLink(cellValue, options, rowdata, action) {
-	//         return "<a href='edit?id=" + rowdata.userid
-	//                 + "'>" + cellValue + "</a>";
-	//     }
+	    function editLink(cellValue, options, rowdata, action) {
+	        return "<a href='edit?id=" + rowdata.userid
+	                + "'>" + cellValue + "</a>";
+	    }
 
-	//     function editCheckbox(cellValue, options, rowdata, action) {
-	//         return "<input type='checkbox' id='del-" + rowdata.userid
-//                 + "' name='" + rowdata.userid + "'>";
-	//     }
+	    function editCheckbox(cellValue, options, rowdata, action) {
+	        return "<input type='checkbox' id='del-" + rowdata.userid
+                + "' name='" + rowdata.userid + "'>";
+	    }
 </script>
 </head>
 <body>
